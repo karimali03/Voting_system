@@ -1,0 +1,142 @@
+import csv
+
+# Data structure: {Governorate: {City: [Districts]}}
+egypt_governorates = {
+    "Cairo": {
+        "Cairo": [
+            "Downtown", "Zamalek", "Heliopolis", "Nasr City", "Maadi",
+            "Mohandessin", "Dokki", "Shubra", "Ain Shams", "El Marg",
+            "6th of October City", "New Cairo", "Madinaty", "Badr City"
+        ]
+    },
+    "Alexandria": {
+        "Alexandria": [
+            "Al Montazah", "Al Gomrok", "Al Attarin", "Al Amreya", "Al Agamy",
+            "Borg El Arab", "El Raml", "Miami", "Sidi Gaber", "Smouha",
+            "Kafr Abdo", "Laurent", "Mansheya", "San Stefano"
+        ]
+    },
+    "Giza": {
+        "Giza": ["Haram", "Dokki", "Agouza", "Imbaba", "Sheikh Zayed City"],
+        "6th of October": ["1st District", "2nd District", "3rd District"],
+        "El Sheikh Zayed": ["Downtown", "Greenland"]
+    },
+    "Luxor": {
+        "Luxor": ["Karnak", "Al Awameya", "Al Bayadiya"],
+        "Esna": ["Downtown", "New Esna"],
+        "Armant": ["Downtown", "Al Mahrousa"]
+    },
+    "Aswan": {
+        "Aswan": ["Abu Simbel", "Kom Ombo", "Daraw"],
+        "Nasr Al Nuba": ["Downtown", "Al Salam"],
+        "Kalabsha": ["Downtown", "New Kalabsha"]
+    },
+    "Port Said": {
+        "Port Said": ["Al Arab", "Al Ganoub", "Port Fouad"],
+        "New Port Said": ["1st District", "2nd District"]
+    },
+    "Suez": {
+        "Suez": ["Al Arbaeen", "Attaka", "Port Tawfik"],
+        "New Suez": ["Downtown", "Al Salam"]
+    },
+    "Ismailia": {
+        "Ismailia": ["Al Qantara", "Fayed", "Al Tal Al Kabir"],
+        "New Ismailia": ["Downtown", "Al Amal"]
+    },
+    "Damietta": {
+        "Damietta": ["Al Zarqa", "Ras El Bar", "New Damietta"],
+        "Faraskur": ["Downtown", "Al Salam"]
+    },
+    "Dakahlia": {
+        "Mansoura": ["Al Salam", "Al Sahab", "New Mansoura"],
+        "Mit Ghamr": ["Downtown", "Al Amal"],
+        "Aga": ["Downtown", "Al Salam"]
+    },
+    "Gharbia": {
+        "Tanta": ["Al Mahrousa", "Al Saa", "New Tanta"],
+        "El Mahalla El Kubra": ["Downtown", "Al Salam"],
+        "Zefta": ["Downtown", "Al Amal"]
+    },
+    "Sharqia": {
+        "Zagazig": ["Downtown", "Al Salam", "New Zagazig"],
+        "10th of Ramadan": ["1st District", "2nd District"],
+        "Belbeis": ["Downtown", "Al Amal"]
+    },
+    "Monufia": {
+        "Shebin El Kom": ["Downtown", "Al Salam"],
+        "Sadat City": ["1st District", "2nd District"],
+        "Ashmoun": ["Downtown", "Al Amal"]
+    },
+    "Qalyubia": {
+        "Banha": ["Downtown", "Al Salam"],
+        "Qalyub": ["Downtown", "Al Amal"],
+        "Shubra El Kheima": ["Downtown", "Al Salam"]
+    },
+    "Beheira": {
+        "Damanhur": ["Downtown", "Al Salam"],
+        "Kafr El Dawwar": ["Downtown", "Al Amal"],
+        "Rashid (Rosetta)": ["Downtown", "Al Salam"]
+    },
+    "Kafr El Sheikh": {
+        "Kafr El Sheikh": ["Downtown", "Al Salam"],
+        "Desouk": ["Downtown", "Al Amal"],
+        "Fuwa": ["Downtown", "Al Salam"]
+    },
+    "Minya": {
+        "Minya": ["Downtown", "Al Salam"],
+        "New Minya": ["1st District", "2nd District"],
+        "Malawi": ["Downtown", "Al Amal"]
+    },
+    "Asyut": {
+        "Asyut": ["Downtown", "Al Salam"],
+        "New Asyut": ["1st District", "2nd District"],
+        "Abnub": ["Downtown", "Al Amal"]
+    },
+    "Sohag": {
+        "Sohag": ["Downtown", "Al Salam"],
+        "New Sohag": ["1st District", "2nd District"],
+        "Akhmim": ["Downtown", "Al Amal"]
+    },
+    "Qena": {
+        "Qena": ["Downtown", "Al Salam"],
+        "New Qena": ["1st District", "2nd District"],
+        "Nag Hammadi": ["Downtown", "Al Amal"]
+    },
+    "Red Sea": {
+        "Hurghada": ["Downtown", "El Dahar", "Sakkala"],
+        "Marsa Alam": ["Downtown", "Port Ghalib"],
+        "El Gouna": ["Downtown", "Marina"]
+    },
+    "New Valley": {
+"Kharga": ["Downtown", "Al Salam"],
+        "Dakhla": ["Downtown", "Al Amal"],
+        "Farafra": ["Downtown", "Al Salam"]
+    },
+    "Matrouh": {
+        "Marsa Matrouh": ["Downtown", "Agiba"],
+        "El Alamein": ["Downtown", "Marina"],
+        "Siwa": ["Downtown", "Al Amal"]
+    },
+    "North Sinai": {
+        "Arish": ["Downtown", "Al Salam"],
+        "Sheikh Zuweid": ["Downtown", "Al Amal"],
+        "Rafah": ["Downtown", "Al Salam"]
+    },
+    "South Sinai": {
+        "Sharm El Sheikh": ["Naama Bay", "Hadaba", "Old Market"],
+        "Dahab": ["Downtown", "Asala"],
+        "Saint Catherine": ["Downtown", "Al Salam"]
+    }
+}
+
+# Create and write to CSV file
+with open('all_egypt_cities_districts.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['Governorate', 'City', 'District'])  # Write header
+    
+    for governorate, cities in egypt_governorates.items():
+        for city, districts in cities.items():
+            for district in districts:
+                writer.writerow([governorate, city, district])
+
+print("CSV file 'all_egypt_cities_districts.csv' has been created successfully!")
