@@ -1,6 +1,3 @@
-DROP DATABASE IF EXISTS voting;
-CREATE DATABASE voting;
-
 USE voting;
 
 CREATE TABLE Nationalities (
@@ -22,15 +19,29 @@ CREATE TABLE Districts(
     FOREIGN KEY (city_id) REFERENCES NationalityCities(city_id) ON DELETE CASCADE
 );
 
+CREATE TABLE Addresses (
+    address_id INT PRIMARY KEY AUTO_INCREMENT,
+    street VARCHAR(100) NOT NULL,
+    city_id INT,
+    district_id INT NOT NULL,
+    postal_code VARCHAR(20),
+	FOREIGN KEY (district_id) REFERENCES Districts(district_id) ON DELETE CASCADE
+);
+
 CREATE TABLE Users(
     user_id INT NOT NULL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     middle_name VARCHAR(30),
     last_name VARCHAR(30) NOT NULL,
     gender ENUM("male", "female") NOT NULL,
-    address_id INT,
-    nationality_id INT,
-    FOREIGN KEY (nationality_id) REFERENCES Nationalities(nationality_id)
+    address_id INT NOT NULL,
+    nationality_id INT NOT NULL,
+    career_id INT NOT NULL,
+    phone_number VARCHAR(50),
+    email_address VARCHAR(50),
+    FOREIGN KEY (nationality_id) REFERENCES Nationalities(nationality_id),
+    FOREIGN KEY (career_id) REFERENCES Careers(career_id),
+    FOREIGN KEY (address_id) REFERENCES Addresses(address_id)
 );
 
 CREATE TABLE VoterNationalities (
